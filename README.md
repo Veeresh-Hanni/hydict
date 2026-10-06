@@ -110,7 +110,9 @@ running the integration test suite with a Redis server available.
 GitHub Actions runs unit tests for pull requests and runs the complete
 `pytest -q` suite against Redis 7 with `HYDICT_REDIS_INTEGRATION=1` for release
 validation. Publishing runs only for version tags such as `v0.5.0`, and only
-after both test jobs succeed.
+after both test jobs succeed. After a successful PyPI upload, the workflow also
+creates a GitHub Release with generated notes and the wheel/source archive
+attached.
 
 To enable publishing, create the `PYPI_TOKEN` repository secret with a PyPI API
 token. The workflow passes it to Twine without placing the token in the

@@ -19,6 +19,8 @@ All notable changes to `hydict` are documented in this file.
   test suite.
 - A tag-triggered PyPI publishing workflow that runs only after both test jobs
   succeed.
+- A GitHub Release created after a successful PyPI upload, with generated notes
+  and the source/wheel distribution attached.
 
 ### Verified
 
