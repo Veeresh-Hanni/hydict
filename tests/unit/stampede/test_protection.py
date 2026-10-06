@@ -1,3 +1,4 @@
+import os
 import threading
 import time
 
@@ -130,6 +131,10 @@ def test_get_or_set_respects_ttl():
     assert ttl > 0
     assert ttl <= 2
 
+@pytest.mark.skipif(
+    os.getenv("HYDICT_REDIS_INTEGRATION") != "1",
+    reason="set HYDICT_REDIS_INTEGRATION=1 to run Redis integration tests",
+)
 def test_get_or_set_uses_l2_before_loader():
     cache = HDict(RedisConfig())
 

@@ -505,9 +505,9 @@ concurrency.
 
 The suite is organized around memory/backend behavior, core mapping and remote
 flows, serialization, invalidation, metrics, LRU eviction, concurrency, and
-stampede protection. Redis integration tests are opt-in locally through
-`HYDICT_REDIS_INTEGRATION=1`; the GitHub Actions Redis job enables them and
-runs the complete `pytest -q` suite against Redis 7.
+stampede protection. Tests that use a live Redis connection are opt-in locally
+through `HYDICT_REDIS_INTEGRATION=1`; the GitHub Actions Redis job enables them
+and runs the complete `pytest -q` suite against Redis 7.
 
 The V5 release verification recorded 82 passing tests. Locally, the Redis tests
 are skipped unless a Redis/Valkey server is available and the environment flag

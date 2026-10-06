@@ -1,3 +1,5 @@
+import os
+
 import pytest
 
 from hydict.core import HDict
@@ -60,6 +62,10 @@ def test_hdict_records_loader_call():
 
 
 
+@pytest.mark.skipif(
+    os.getenv("HYDICT_REDIS_INTEGRATION") != "1",
+    reason="set HYDICT_REDIS_INTEGRATION=1 to run Redis integration tests",
+)
 def test_hdict_records_l2_hit():
     cache = HDict(RedisConfig())
 
