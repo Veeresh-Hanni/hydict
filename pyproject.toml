@@ -1,0 +1,19 @@
+[project]
+name = "hydict"
+version = "0.1.0"
+description = "hydict — a dict-compatible hierarchical cache for Python with local L1 memory and Redis/Valkey L2 storage."
+readme = "README.md"
+authors = [
+    { name = "Veeresh Hanni", email = "veereshhanni347@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "redis>=5.0",
+]
+
+[project.scripts]
+hydict = "hydict:main"
+
+[build-system]
+requires = ["uv_build>=0.12.20,<0.13.0"]
+build-backend = "uv_build"
