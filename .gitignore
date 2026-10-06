@@ -1,1 +1,100 @@
-__pycache__
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# =========================
+# Virtual environments
+# =========================
+.venv/
+venv/
+env/
+ENV/
+
+# =========================
+# Python packaging
+# =========================
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# =========================
+# Testing
+# =========================
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+pytestdebug.log
+
+# =========================
+# Type checking / linting
+# =========================
+.mypy_cache/
+.pyright/
+.ruff_cache/
+
+# =========================
+# IDE / Editors
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# =========================
+# Environment / secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Redis / local data
+# =========================
+*.rdb
+dump.rdb
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+
+# =========================
+# Benchmark output
+# =========================
+benchmark-results/
+.prof/
+*.prof
+
+# =========================
+# Documentation builds
+# =========================
+docs/_build/
+site/
+_site/
+
+# =========================
+# uv
+# =========================
+.uv/
+
+# =========================
+# Jupyter
+# =========================
+.ipynb_checkpoints/
+
+_site/

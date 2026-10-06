@@ -1,0 +1,15 @@
+site_name: hydict
+site_description: A dict-compatible hierarchical cache for Python.
+site_url: https://hydict.readthedocs.io/
+repo_url: https://github.com/Veeresh-Hanni/hydict
+repo_name: Veeresh-Hanni/hydict
+site_dir: _site
+
+theme:
+  name: mkdocs
+
+nav:
+  - Introduction: index.md
+  - Architecture: architecture.md
+  - Developer guide: developer-guide.md
+  - Release history: changelog.md

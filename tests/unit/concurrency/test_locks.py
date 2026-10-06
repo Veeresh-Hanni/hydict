@@ -1,4 +1,7 @@
+import os
 import threading
+
+import pytest
 
 from hydict.backends.memory import MemoryBackend
 from hydict import RedisConfig
@@ -169,6 +172,10 @@ def test_concurrent_writes_respect_lru_limit():
 
     assert len(cache._memory) <= 5
 
+@pytest.mark.skipif(
+    os.getenv("HYDICT_REDIS_INTEGRATION") != "1",
+    reason="set HYDICT_REDIS_INTEGRATION=1 to run Redis integration tests",
+)
 def test_concurrent_redis_access():
     config = RedisConfig(
         db=15,

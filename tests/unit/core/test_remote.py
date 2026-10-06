@@ -1,3 +1,5 @@
+import os
+
 import pytest
 import redis
 
@@ -301,6 +303,10 @@ def test_remote_backend_uses_cache_config(monkeypatch):
     assert pool.connection_kwargs["host"] == "redis.example"
     assert pool.connection_kwargs["port"] == 6380
 
+@pytest.mark.skipif(
+    os.getenv("HYDICT_REDIS_INTEGRATION") != "1",
+    reason="set HYDICT_REDIS_INTEGRATION=1 to run Redis integration tests",
+)
 def test_remote_backend_pool_exhaustion_translates_connection_error():
     config = RedisConfig(
         max_connections=1,
@@ -311,7 +317,7 @@ def test_remote_backend_pool_exhaustion_translates_connection_error():
 
     pool = backend.client.connection_pool
 
-    connection = pool.get_connection()
+    connection = pool.get_connection("SET")
 
     try:
         with pytest.raises(BackendConnectionError):
