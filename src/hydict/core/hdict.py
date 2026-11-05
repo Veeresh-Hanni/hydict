@@ -1,8 +1,6 @@
 from ..stampede.protection import StampedeProtection
-
 from ..backends.memory import MemoryBackend
 from ..backends.remote import RemoteBackend
-from ..config.redis import RedisConfig
 from ..invalidation import CacheInvalidator
 from ..metrics import MetricsCollector
 
@@ -32,12 +30,7 @@ class HDict:
         self._metrics = MetricsCollector()
 
     def __setitem__(self, key, value):
-        # Write to L1
-        self._memory.set(key, value)
-
-        # Write to L2
-        if self._remote is not None:
-            self._remote.set(key, value)
+        self.set(key, value)
 
     def __getitem__(self, key, _record_metrics=True):
         if self._memory.exists(key):
@@ -100,10 +93,10 @@ class HDict:
             self._remote.clear()
 
     def set(self, key, value, ttl=None):
-        self._memory.set(key, value, ttl=ttl)
-
         if self._remote is not None:
             self._remote.set(key, value, ttl=ttl)
+
+        self._memory.set(key, value, ttl=ttl)
 
     def invalidate(self, key):
         self._invalidator.invalidate(key)

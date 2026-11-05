@@ -225,6 +225,41 @@ def test_l2_dict_hit_promotes_to_l1(monkeypatch):
     assert cache._memory.exists("user")
     assert cache._memory.get("user") == value
 
+
+def test_get_or_set_does_not_populate_l1_when_serialization_fails(monkeypatch):
+    monkeypatch.setattr(
+        "hydict.backends.remote.redis.Redis",
+        FakeRedis
+    )
+
+    cache = HDict(RedisConfig())
+
+    with pytest.raises(TypeError):
+        cache.get_or_set("user", lambda: object())
+
+    assert not cache._memory.exists("user")
+    assert not cache._remote.exists("user")
+
+
+def test_get_or_set_deserializes_l2_value_before_returning(monkeypatch):
+    monkeypatch.setattr(
+        "hydict.backends.remote.redis.Redis",
+        FakeRedis
+    )
+
+    cache = HDict(RedisConfig())
+    value = {"name": "Veeresh", "roles": ["admin"]}
+    cache._remote.client.values["user"] = (
+        '{"name": "Veeresh", "roles": ["admin"]}'
+    )
+
+    result = cache.get_or_set("user", lambda: {"name": "Rahul"})
+
+    assert result == value
+    assert isinstance(result, dict)
+    assert cache._memory.get("user") == value
+
+
 def test_remote_backend_ttl(monkeypatch):
     monkeypatch.setattr(
         "hydict.backends.remote.redis.Redis",

@@ -1,3 +1,7 @@
+from datetime import datetime
+
+import pytest
+
 from hydict.serialization import Serializer
 
 
@@ -34,6 +38,25 @@ def test_serialize_dict():
     decoded = serializer.deserialize(encoded)
 
     assert decoded == value
+
+
+def test_serialize_datetime_as_isoformat():
+    serializer = Serializer()
+    value = {"created_at": datetime(2026, 11, 5, 20, 45, 0)}
+
+    encoded = serializer.serialize(value)
+
+    assert serializer.deserialize(encoded) == {
+        "created_at": "2026-11-05T20:45:00"
+    }
+
+
+def test_serialize_unsupported_object_raises_type_error():
+    serializer = Serializer()
+
+    with pytest.raises(TypeError):
+        serializer.serialize(object())
+
 
 def test_serialize_basic_types():
     serializer = Serializer()
