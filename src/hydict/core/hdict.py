@@ -94,6 +94,9 @@ class HDict:
 
     def set(self, key, value, ttl=None):
         if self._remote is not None:
+            value = self._remote.serializer.deserialize(
+                self._remote.serializer.serialize(value)
+            )
             self._remote.set(key, value, ttl=ttl)
 
         self._memory.set(key, value, ttl=ttl)

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime, time
 
 import pytest
 
@@ -42,13 +42,15 @@ def test_serialize_dict():
 
 def test_serialize_datetime_as_isoformat():
     serializer = Serializer()
-    value = {"created_at": datetime(2026, 11, 5, 20, 45, 0)}
+    value = {
+        "created_at": datetime(2026, 11, 5, 20, 45, 0),
+        "birth_date": date(2026, 11, 5),
+        "login_time": time(20, 45, 0),
+    }
 
     encoded = serializer.serialize(value)
 
-    assert serializer.deserialize(encoded) == {
-        "created_at": "2026-11-05T20:45:00"
-    }
+    assert serializer.deserialize(encoded) == value
 
 
 def test_serialize_unsupported_object_raises_type_error():

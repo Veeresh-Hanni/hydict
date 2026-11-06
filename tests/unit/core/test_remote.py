@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 import pytest
 import redis
@@ -258,6 +259,24 @@ def test_get_or_set_deserializes_l2_value_before_returning(monkeypatch):
     assert result == value
     assert isinstance(result, dict)
     assert cache._memory.get("user") == value
+
+
+def test_get_or_set_returns_deserialized_datetime_on_initial_load(monkeypatch):
+    monkeypatch.setattr(
+        "hydict.backends.remote.redis.Redis",
+        FakeRedis
+    )
+
+    cache = HDict(RedisConfig())
+    value = {"created_at": datetime(2026, 11, 5, 20, 45, 0)}
+
+    first_result = cache.get_or_set("user", lambda: value)
+    second_result = cache.get_or_set("user", lambda: None)
+
+    assert first_result == value
+    assert second_result == value
+    assert isinstance(first_result["created_at"], datetime)
+    assert isinstance(second_result["created_at"], datetime)
 
 
 def test_remote_backend_ttl(monkeypatch):
